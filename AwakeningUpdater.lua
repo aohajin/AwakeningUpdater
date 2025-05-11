@@ -14,7 +14,6 @@ eventFrame:SetScript(
 
             if addOnName == "AwakeningUpdater" then
                 if not AwakeningUpdaterSaved then AwakeningUpdaterSaved = {} end
-                if not AwakeningUpdaterSaved.minimap then AwakeningUpdaterSaved.minimap = {} end
                 if not AwakeningUpdaterSaved.settings then AwakeningUpdaterSaved.settings = {} end
                 if not AwakeningUpdaterSaved.settings.frames then AwakeningUpdaterSaved.settings.frames = {} end
 

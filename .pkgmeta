@@ -3,6 +3,8 @@ package-as: AwakeningUpdater
 enable-nolib-creation: no
 
 externals:
+    Libs/AceComm-3.0:
+        url: https://repos.wowace.com/wow/ace3/trunk/AceComm-3.0
     Libs/LibStub:
         url: https://repos.wowace.com/wow/libstub/trunk
     Libs/LibDataBroker-1.1:
