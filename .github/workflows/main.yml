@@ -1,0 +1,29 @@
+name: Package and Upload
+
+on:
+  push:
+    tags:
+      - 'v*'  # 只在打 tag 时发布
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install WowPackager
+        run: |
+          git clone https://github.com/BigWigsMods/packager packager
+          chmod +x ./packager/release.sh
+
+      - name: Build Addon
+        run: |
+          ./packager/release.sh
+
+      - name: Upload to CurseForge
+        run: |
+          curl -H "x-api-token: ${{ec2f26ad-245a-43a2-b027-2f075856bb0f}}" \
+               -F "metadata=@.pkgmeta" \
+               -F "file=@_Packages/MyAddon-*.zip" \
+               https://wow.curseforge.com/api/projects/YOUR_PROJECT_ID/upload-file
