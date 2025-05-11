@@ -8,4 +8,15 @@
 
 embeds.xml
 
+GlobalSettings.lua
+WeakAuras.lua
+WeakAurasImporter.lua
+Utility.lua
+
+Interface/Window.lua
+Interface/Interface.lua
+Interface/AuraImportElement.lua
+Interface/AuraUpdater.lua
+Interface/AuraChecker.lua
+
 AwakeningUpdater.lua
