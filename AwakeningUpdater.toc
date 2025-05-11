@@ -1,0 +1,11 @@
+## Interface: 110105
+## Version: 1
+## Title: Awakening Updater
+## Author: 怨念物
+## SavedVariables: AwakeningUpdaterSaved
+## OptionalDeps: WeakAuras
+## X-Curse-Project-ID: 1262023
+
+embeds.xml
+
+AwakeningUpdater.lua
