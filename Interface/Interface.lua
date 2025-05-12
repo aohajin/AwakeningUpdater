@@ -41,7 +41,7 @@ function AUP:InitializeInterface()
     updateButton.text = updateButton:CreateFontString(nil, "OVERLAY")
     updateButton.text:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
     updateButton.text:SetPoint("CENTER", updateButton, "CENTER")
-    updateButton.text:SetText(string.format("|cff%sUpdate|r", AUP.gs.visual.colorStrings.white))
+    updateButton.text:SetText(string.format("|cff%s更新|r", AUP.gs.visual.colorStrings.white))
 
     updateButton:SetScript(
         "OnMouseDown",
@@ -69,7 +69,7 @@ function AUP:InitializeInterface()
     checkButton.text = checkButton:CreateFontString(nil, "OVERLAY")
     checkButton.text:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
     checkButton.text:SetPoint("CENTER", checkButton, "CENTER")
-    checkButton.text:SetText(string.format("|cff%sCheck|r", AUP.gs.visual.colorStrings.white))
+    checkButton.text:SetText(string.format("|cff%s检查|r", AUP.gs.visual.colorStrings.white))
 
     checkButton:SetScript(
         "OnMouseDown",

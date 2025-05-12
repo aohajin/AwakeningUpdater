@@ -43,7 +43,7 @@ end
 local function BroadcastVersions()
     if not serializedTable then return end
 
-    AceComm:SendCommMessage("LU_Versions", serializedTable, "GUILD")
+    AceComm:SendCommMessage("AU_Versions", serializedTable, "GUILD")
 end
 
 local function BuildAuraImportElements()
@@ -113,12 +113,8 @@ local function BuildAuraImportElements()
     end
 
     if next(aurasToUpdate) then
-        AUP.LDB.icon = [[Interface\Addons\AwakeningUpdater\Media\Textures\minimap_logo_red.tga]]
-
         allAurasUpdatedText:Hide()
     else
-        AUP.LDB.icon = [[Interface\Addons\AwakeningUpdater\Media\Textures\minimap_logo.tga]]
-
         allAurasUpdatedText:Show()
     end
 
@@ -142,7 +138,7 @@ local function QueueUpdate()
 end
 
 local function RequestVersions(chatType)
-    AceComm:SendCommMessage("LU_Request", " ", chatType or "GUILD")
+    AceComm:SendCommMessage("AU_Request", " ", chatType or "GUILD")
 end
 
 local function ReceiveVersions(_, payload, _, sender)
@@ -195,8 +191,8 @@ function AUP:InitializeAuraUpdater()
         AwakeningUpdater = tonumber(C_AddOns.GetAddOnMetadata(addOnName, "Version")) -- AddOn version
     }
 
-    AceComm:RegisterComm("LU_Request", BroadcastVersions)
-    AceComm:RegisterComm("LU_Versions", ReceiveVersions)
+    AceComm:RegisterComm("AU_Request", BroadcastVersions)
+    AceComm:RegisterComm("AU_Versions", ReceiveVersions)
 
     for displayName, auraData in pairs(AwakeningUpdaterSaved.WeakAuras) do
         auraUIDs[auraData.d.uid] = true
@@ -254,7 +250,7 @@ function AUP:InitializeAuraUpdater()
 
     allAurasUpdatedText:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
     allAurasUpdatedText:SetPoint("CENTER", AUP.updateWindow, "CENTER")
-    allAurasUpdatedText:SetText(string.format("|cff%sAll auras up to date!|r", AUP.gs.visual.colorStrings.green))
+    allAurasUpdatedText:SetText(string.format("|cff%s已全部最新|r", AUP.gs.visual.colorStrings.green))
 
     BuildAuraImportElements()
     RequestVersions()
