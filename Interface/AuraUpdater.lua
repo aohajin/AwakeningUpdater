@@ -40,10 +40,10 @@ local function SerializeVersionsTable()
     end
 end
 
-local function BroadcastVersions()
+local function BroadcastVersions(prefix, message, channel, sender)
     if not serializedTable then return end
 
-    AceComm:SendCommMessage("AU_Versions", serializedTable, "GUILD")
+    AceComm:SendCommMessage("AU_Versions", serializedTable, channel or "GUILD")
 end
 
 local function BuildAuraImportElements()

@@ -7,6 +7,23 @@ local LibDeflate = LibStub("LibDeflate")
 function AUP:InitializeWeakAurasImporter()
     if not AwakeningUpdaterSaved.WeakAuras then AwakeningUpdaterSaved.WeakAuras = {} end
 
+    -- 清理已经不存在于 AUP.WeakAuras 中的条目
+    local validDisplayNames = {}
+    for _, auraData in ipairs(AUP.WeakAuras) do
+        validDisplayNames[auraData.displayName] = true
+    end
+
+    local keysToDelete = {}
+    for displayName in pairs(AwakeningUpdaterSaved.WeakAuras) do
+        if not validDisplayNames[displayName] then
+            table.insert(keysToDelete, displayName)
+        end
+    end
+    -- 删除
+    for _, displayName in ipairs(keysToDelete) do
+        AwakeningUpdaterSaved.WeakAuras[displayName] = nil
+    end
+
     for _, auraData in ipairs(AUP.WeakAuras) do
         local displayName = auraData.displayName
         local version = auraData.version
