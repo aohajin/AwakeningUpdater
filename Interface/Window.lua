@@ -1,11 +1,11 @@
-local _, LRP = ...
+local _, AUP = ...
 
 local buttonSize = 16
 local buttonMargin = 2
-local moverFrameHeight = buttonSize + 2 * buttonMargin
+local moverFrameHeight = buttonSize + 2 * buttonMargin + 4
 
 -- Name is used to save position/size of the window (if set)
-function LRP:CreateWindow(name, exitable, movable, resizable)
+function AUP:CreateWindow(name, exitable, movable, resizable)
     local window = CreateFrame("Frame", nil, UIParent)
 
     -- Background
@@ -22,9 +22,9 @@ function LRP:CreateWindow(name, exitable, movable, resizable)
     window.lowerTexture:SetColorTexture(0 / 255, 21 / 255, 56 / 255)
 
     -- Border
-    local borderColor = LRP.gs.visual.borderColor
+    local borderColor = AUP.gs.visual.borderColor
 
-    LRP:AddBorder(window, 1, 1, 1)
+    AUP:AddBorder(window, 1, 1, 1)
     window:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
 
     window.buttons = {}
@@ -123,7 +123,7 @@ function LRP:CreateWindow(name, exitable, movable, resizable)
                 if button == "LeftButton" then
                     window:StopMovingOrSizing()
 
-                    LRP:SavePosition(window, name)
+                    AUP:SavePosition(window, name)
                 end
             end
         )
@@ -181,14 +181,14 @@ function LRP:CreateWindow(name, exitable, movable, resizable)
                 if button == "LeftButton" then
                     window:StopMovingOrSizing()
 
-                    LRP:SaveSize(window, name)
+                    AUP:SaveSize(window, name)
                 end
             end
         )
     end
 
-    LRP:RestoreSize(window, name)
-    LRP:RestorePosition(window, name)
+    AUP:RestoreSize(window, name)
+    AUP:RestorePosition(window, name)
 
     return window
 end

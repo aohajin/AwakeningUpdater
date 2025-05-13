@@ -19,9 +19,10 @@ function AUP:InitializeInterface()
     AUP.window:SetResizeBounds(windowWidth, windowHeight) -- Height is set based on timeine data
     AUP.window:Hide()
 
-    local title = AUP.window:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    title:SetPoint("TOP", AUP.window, "TOP", 0, -10)
-    title:SetText("觉醒团本WA合集更新器")
+    local title = AUP.window.moverFrame:CreateFontString(nil, "OVERLAY")
+    title:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    title:SetPoint("CENTER", AUP.window.moverFrame, "CENTER", 0, 0) -- 居中在 moverFrame 里
+    title:SetText("觉醒WA同步工具")
 
     -- Button frame
     local buttonFrame = CreateFrame("Frame", nil, AUP.window)
