@@ -54,14 +54,14 @@ function AUP:CreateAuraImportElement(parent)
     frame.versionCount:SetPoint("CENTER", frame, "CENTER")
 
     function frame:SetVersionsBehind(count)
-        frame.versionCount:SetText(string.format("|cff%s%d version(s)|r", AUP.gs.visual.colorStrings.red, count))
+        frame.versionCount:SetText(string.format("|cff%s%d个版本|r", AUP.gs.visual.colorStrings.red, count))
     end
 
     -- Import button
     frame.importButton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
 
     frame.importButton:SetPoint("RIGHT", frame, "RIGHT", -8, 0)
-    frame.importButton:SetText("Update")
+    frame.importButton:SetText("更新")
     frame.importButton:GetFontString():SetFont(AUP.gs.visual.font, 13)
 
     C_Timer.After(0, function() frame.importButton:SetSize(frame.importButton:GetTextWidth() + 20, 32) end)
@@ -71,10 +71,10 @@ function AUP:CreateAuraImportElement(parent)
 
     frame.requiresUpdateText:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
     frame.requiresUpdateText:SetPoint("RIGHT", frame, "RIGHT", -8, 0)
-    frame.requiresUpdateText:SetText(string.format("|cff%sUpdate addon!|r", AUP.gs.visual.colorStrings.red))
+    frame.requiresUpdateText:SetText(string.format("|cff%s更新插件!|r", AUP.gs.visual.colorStrings.red))
     frame.requiresUpdateText:Hide()
 
-    AUP:AddTooltip(frame.requiresUpdateText, "A newer version of this aura is available. Update the addon to receive it.")
+    AUP:AddTooltip(frame.requiresUpdateText, "此WA似乎有新版本,更新插件以获取最新版本.")
 
     -- Border
     AUP:AddBorder(frame)

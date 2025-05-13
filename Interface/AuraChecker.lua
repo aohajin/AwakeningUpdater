@@ -243,7 +243,7 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                "无法获取该玩家的WA信息.|n|n他可能并没有装AwakeningUpdater插件."
+                "无法获取该玩家的WA信息.|n|n可能并没有装AwakeningUpdater插件."
             )
         else
             versionFrame.versionsBehindText:Show()
