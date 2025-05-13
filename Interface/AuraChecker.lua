@@ -233,7 +233,7 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                "This player's aura is up to date."
+                "该玩家的WA都是最新的."
             )
         elseif versionsBehind == -1 then
             versionFrame.versionsBehindText:Hide()
@@ -243,7 +243,7 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                "No info has been received for this player's auras.|n|nThey may not have AwakeningUpdater installed."
+                "无法获取该玩家的WA信息.|n|n他可能并没有装AwakeningUpdater插件."
             )
         else
             versionFrame.versionsBehindText:Show()
@@ -254,7 +254,7 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                string.format("This player's aura is %d version(s) behind.", versionsBehind)
+                string.format("此玩家的WA落后%d个版本.", versionsBehind)
             )
         end
     end
