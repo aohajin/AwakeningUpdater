@@ -42,7 +42,7 @@ end
 
 local function BuildAuraLabels()
     if not labelFrame then
-        labelFrame = CreateFrame("Frame", nil, AUP.checkWindow)
+        labelFrame = CreateFrame("Frame", nil, AUP.waCheckWindow)
         labelFrame:SetPoint("BOTTOMLEFT", scrollFrame, "TOPLEFT", 0, 4)
         labelFrame:SetPoint("BOTTOMRIGHT", scrollFrame, "TOPRIGHT", 0, 4)
         labelFrame:SetHeight(24)
@@ -277,11 +277,11 @@ local function CheckElementInitializer(frame, data)
 end
 
 function AUP:InitializeAuraChecker()
-    scrollFrame = CreateFrame("Frame", nil, AUP.checkWindow, "WowScrollBoxList")
-    scrollFrame:SetPoint("TOPLEFT", AUP.checkWindow, "TOPLEFT", 4, -32)
-    scrollFrame:SetPoint("BOTTOMRIGHT", AUP.checkWindow, "BOTTOMRIGHT", -24, 4)
+    scrollFrame = CreateFrame("Frame", nil, AUP.waCheckWindow, "WowScrollBoxList")
+    scrollFrame:SetPoint("TOPLEFT", AUP.waCheckWindow, "TOPLEFT", 4, -32)
+    scrollFrame:SetPoint("BOTTOMRIGHT", AUP.waCheckWindow, "BOTTOMRIGHT", -24, 4)
 
-    scrollBar = CreateFrame("EventFrame", nil, AUP.checkWindow, "MinimalScrollBar")
+    scrollBar = CreateFrame("EventFrame", nil, AUP.waCheckWindow, "MinimalScrollBar")
     scrollBar:SetPoint("TOP", scrollFrame, "TOPRIGHT", 12, 0)
     scrollBar:SetPoint("BOTTOM", scrollFrame, "BOTTOMRIGHT", 12, 16)
 

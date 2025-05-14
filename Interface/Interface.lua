@@ -52,7 +52,8 @@ function AUP:InitializeInterface()
         "OnMouseDown",
         function()
             AUP.updateWindow:Show()
-            AUP.checkWindow:Hide()
+            AUP.waCheckWindow:Hide()
+            AUP.addonCheckWindow:Hide()
         end
     )
 
@@ -60,43 +61,76 @@ function AUP:InitializeInterface()
     AUP:AddBorder(updateButton)
     updateButton:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
 
-    -- Check button
-    local checkButton = CreateFrame("Frame", nil, AUP.window)
+    -- Addon Check button
+    local addonCheckButton = CreateFrame("Frame", nil, AUP.window)
 
-    checkButton:SetPoint("TOPRIGHT", buttonFrame, "TOPRIGHT", -4, -4)
-    checkButton:SetPoint("BOTTOMLEFT", buttonFrame, "BOTTOM", 2, 0)
-    checkButton:EnableMouse(true)
+    addonCheckButton:SetPoint("TOP", buttonFrame, "TOP", -4, -4)
+    addonCheckButton:SetPoint("BOTTOM", buttonFrame, "BOTTOM", 2, 0)
+    addonCheckButton:EnableMouse(true)
 
-    checkButton.highlight = checkButton:CreateTexture(nil, "HIGHLIGHT")
-    checkButton.highlight:SetColorTexture(1, 1, 1, 0.05)
-    checkButton.highlight:SetAllPoints()
+    addonCheckButton.highlight = addonCheckButton:CreateTexture(nil, "HIGHLIGHT")
+    addonCheckButton.highlight:SetColorTexture(1, 1, 1, 0.05)
+    addonCheckButton.highlight:SetAllPoints()
 
-    checkButton.text = checkButton:CreateFontString(nil, "OVERLAY")
-    checkButton.text:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
-    checkButton.text:SetPoint("CENTER", checkButton, "CENTER")
-    checkButton.text:SetText(string.format("|cff%s检查|r", AUP.gs.visual.colorStrings.white))
+    addonCheckButton.text = addonCheckButton:CreateFontString(nil, "OVERLAY")
+    addonCheckButton.text:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    addonCheckButton.text:SetPoint("CENTER", addonCheckButton, "CENTER")
+    addonCheckButton.text:SetText(string.format("|cff%s插件检查|r", AUP.gs.visual.colorStrings.white))
 
-    checkButton:SetScript(
+    addonCheckButton:SetScript(
         "OnMouseDown",
         function()
             AUP.updateWindow:Hide()
-            AUP.checkWindow:Show()
+            AUP.waCheckWindow:Hide()
+            AUP.addonCheckWindow:Show()
         end
     )
 
-    AUP:AddBorder(checkButton)
-    checkButton:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
+    AUP:AddBorder(addonCheckButton)
+    addonCheckButton:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
+
+    -- WA Check button
+    local waCheckButton = CreateFrame("Frame", nil, AUP.window)
+
+    waCheckButton:SetPoint("TOPRIGHT", buttonFrame, "TOPRIGHT", -4, -4)
+    waCheckButton:SetPoint("BOTTOMLEFT", buttonFrame, "BOTTOM", 2, 0)
+    waCheckButton:EnableMouse(true)
+
+    waCheckButton.highlight = waCheckButton:CreateTexture(nil, "HIGHLIGHT")
+    waCheckButton.highlight:SetColorTexture(1, 1, 1, 0.05)
+    waCheckButton.highlight:SetAllPoints()
+
+    waCheckButton.text = waCheckButton:CreateFontString(nil, "OVERLAY")
+    waCheckButton.text:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    waCheckButton.text:SetPoint("CENTER", waCheckButton, "CENTER")
+    waCheckButton.text:SetText(string.format("|cff%sWA检查|r", AUP.gs.visual.colorStrings.white))
+
+    waCheckButton:SetScript(
+        "OnMouseDown",
+        function()
+            AUP.updateWindow:Hide()
+            AUP.waCheckWindow:Show()
+            AUP.addonCheckWindow:Hide()
+        end
+    )
+
+    AUP:AddBorder(waCheckButton)
+    waCheckButton:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
 
     -- Sub windows
     AUP.updateWindow = CreateFrame("Frame", nil, AUP.window)
     AUP.updateWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
     AUP.updateWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
 
-    AUP.checkWindow = CreateFrame("Frame", nil, AUP.window)
-    AUP.checkWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
-    AUP.checkWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
+    AUP.waCheckWindow = CreateFrame("Frame", nil, AUP.window)
+    AUP.waCheckWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
+    AUP.waCheckWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
+    AUP.waCheckWindow:Hide()
 
-    AUP.checkWindow:Hide()
+    AUP.addonCheckWindow = CreateFrame("Frame", nil, AUP.window)
+    AUP.addonCheckWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
+    AUP.addonCheckWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
+    AUP.addonCheckWindow:Hide()
 
     -- If there's no saved position/size settings for the main window yet, apply some default values
     local windowSettings = AwakeningUpdaterSaved.settings.frames["Main"]
