@@ -317,10 +317,18 @@ function AUP:AddBorder(parent, thickness, horizontalOffset, verticalOffset)
     parent:SetBorderColor(0, 0, 0)
 end
 
-function AUP:GetWeakaurasVersion()
-    print(string.format("AwakeningUpdater: %s", text))
-end
-
 function AUP:ErrorPrint(text)
     print(string.format("AwakeningUpdater |cffff0000ERROR|r: %s", text))
+end
+
+function AUP:IsAddon(name)
+    if not name then return false end
+
+    for _, addonName in ipairs(AUP.AddonsList) do
+        if addonName == name then
+            return true
+        end
+    end
+
+    return false
 end

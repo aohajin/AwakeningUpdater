@@ -53,21 +53,17 @@ local function BuildAuraLabels()
     local sortedLabelTable = {}
 
     for displayName in pairs(AUP.highestSeenVersionsTable) do
-        table.insert(sortedLabelTable, displayName)
+        if not AUP.IsAddon(displayName) then
+            -- This is a WeakAura, not an add-on
+            table.insert(sortedLabelTable, displayName)
+        end
     end
 
     -- Sort the labels (addon version is always first)
     table.sort(
         sortedLabelTable,
         function(dispalyName1, displayName2)
-            local isAddOn1 = dispalyName1 == "AwakeningUpdater"
-            local isAddOn2 = displayName2 == "AwakeningUpdater"
-
-            if isAddOn1 ~= isAddOn2 then
-                return isAddOn1
-            else
-                return dispalyName1 < displayName2
-            end
+            return dispalyName1 < displayName2
         end
     )
 
@@ -112,36 +108,33 @@ function AUP:UpdateCheckElementForUnit(unit, versionsTable)
         unit = unit,
         name = name, -- Used for sorting
         coloredName = coloredName,
-        versionsBehindTable = {}
+        versionsBehindTable = {},
     }
 
     -- Compare unit's versions against the highest ones we've seen so far
     -- Set version to -1 if no version table was provided (i.e. we have no info for this unit)
     for displayName, highestVersion in pairs(AUP.highestSeenVersionsTable) do
-        local version = versionsTable and versionsTable[displayName] or 0
-        local versionsBehind = versionsTable and highestVersion - version or -1
+        repeat
+            if AUP.IsAddon(displayName) then break end -- This is an add-on, not a WeakAura
 
-        table.insert(
-            data.versionsBehindTable,
-            {
-                displayName = displayName,
-                versionsBehind = versionsBehind
-            }
-        )
+            local version = versionsTable and versionsTable[displayName] or 0
+            local versionsBehind = versionsTable and highestVersion - version or -1
+
+            table.insert(
+                data.versionsBehindTable,
+                {
+                    displayName = displayName,
+                    versionsBehind = versionsBehind
+                }
+            )
+        until true
     end
 
     -- Sort the aura versions so they match the labels
     table.sort(
         data.versionsBehindTable,
         function(info1, info2)
-            local isAddOn1 = info1.displayName == "AwakeningUpdater"
-            local isAddOn2 = info2.displayName == "AwakeningUpdater"
-
-            if isAddOn1 ~= isAddOn2 then
-                return isAddOn1
-            else
-                return info1.displayName < info2.displayName
-            end
+            return info1.displayName < info2.displayName
         end
     )
 
@@ -174,6 +167,7 @@ end
 function AUP:RebuildAllCheckElements()
     for unit in AUP:IterateGroupMembers() do
         local GUID = UnitGUID(unit)
+        print(GUID)
         local versionsTable = guidToVersionsTable[GUID]
 
         AUP:UpdateCheckElementForUnit(unit, versionsTable)

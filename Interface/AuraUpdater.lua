@@ -18,8 +18,12 @@ local allAurasUpdatedText
 
 local function SerializeVersionsTable()
     local versionsTable = {
-        AwakeningUpdater = tonumber(C_AddOns.GetAddOnMetadata(addOnName, "Version")) -- AddOn version
+        --AwakeningUpdater = tonumber(C_AddOns.GetAddOnMetadata(addOnName, "Version")) -- AddOn version
     }
+    for _, addon in ipairs(AUP.AddonsList) do
+        -- keep the string version
+        versionsTable[addon] = C_AddOns.GetAddOnMetadata(addon, "Version")
+    end
 
     for displayName, auraData in pairs(AwakeningUpdaterSaved.WeakAuras) do
         local uid = auraData.d.uid
@@ -56,23 +60,30 @@ local function BuildAuraImportElements()
     local aurasToUpdate = {}
 
     for displayName, highestSeenVersion in pairs(AUP.highestSeenVersionsTable) do
-        local auraData = AwakeningUpdaterSaved.WeakAuras[displayName]
-        local uid = auraData and auraData.d.uid
-        local importedVersion = auraData and auraData.d.AwakeningVersion or 0
-        local installedAuraID = uid and UIDToID[uid]
-        local installedVersion = installedAuraID and WeakAuras.GetData(installedAuraID).AwakeningVersion or 0
+        repeat
+            if AUP.IsAddon(displayName) then
+                -- This is an add-on, not a WeakAura
+                break
+            end
 
-        if installedVersion < importedVersion then
-            table.insert(
-                aurasToUpdate,
-                {
-                    displayName = displayName,
-                    installedVersion = installedVersion,
-                    importedVersion = importedVersion,
-                    highestSeenVersion = highestSeenVersion
-                }
-            )
-        end
+            local auraData = AwakeningUpdaterSaved.WeakAuras[displayName]
+            local uid = auraData and auraData.d.uid
+            local importedVersion = auraData and auraData.d.AwakeningVersion or 0
+            local installedAuraID = uid and UIDToID[uid]
+            local installedVersion = installedAuraID and WeakAuras.GetData(installedAuraID).AwakeningVersion or 0
+
+            if installedVersion < importedVersion then
+                table.insert(
+                    aurasToUpdate,
+                    {
+                        displayName = displayName,
+                        installedVersion = installedVersion,
+                        importedVersion = importedVersion,
+                        highestSeenVersion = highestSeenVersion
+                    }
+                )
+            end
+        until true
     end
 
     table.sort(
@@ -168,12 +179,17 @@ local function ReceiveVersions(_, payload, _, sender)
     end
 
     for displayName, version in pairs(versionsTable) do
-        local highestSeenVersion = AUP.highestSeenVersionsTable[displayName]
+        if AUP.IsAddon(displayName) then
+            -- This is an add-on, not a WeakAura, use version list table
+            table.insert(AUP.highestSeenVersionsTable[displayName], version)
+        else
+            -- check wa version
+            local highestSeenVersion = AUP.highestSeenVersionsTable[displayName]
+            if not highestSeenVersion or highestSeenVersion < version then
+                AUP.highestSeenVersionsTable[displayName] = version
 
-        if not highestSeenVersion or highestSeenVersion < version then
-            AUP.highestSeenVersionsTable[displayName] = version
-
-            shouldFullRebuild = true
+                shouldFullRebuild = true
+            end
         end
     end
 
@@ -188,8 +204,14 @@ end
 
 function AUP:InitializeAuraUpdater()
     AUP.highestSeenVersionsTable = {
-        AwakeningUpdater = tonumber(C_AddOns.GetAddOnMetadata(addOnName, "Version")) -- AddOn version
+        --AwakeningUpdater = tonumber(C_AddOns.GetAddOnMetadata(addOnName, "Version")) -- AddOn version
     }
+
+    for _, addon in ipairs(AUP.AddonsList) do
+        -- keep the string version
+        -- first is your version
+        AUP.highestSeenVersionsTable[addon] = { C_AddOns.GetAddOnMetadata(addon, "Version") }
+    end
 
     AceComm:RegisterComm("AU_Request", BroadcastVersions)
     AceComm:RegisterComm("AU_Versions", ReceiveVersions)

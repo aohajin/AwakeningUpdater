@@ -9,6 +9,7 @@
 embeds.xml
 
 GlobalSettings.lua
+AddonsList.lua
 WeakAuras.lua
 WeakAurasImporter.lua
 Utility.lua
@@ -18,5 +19,6 @@ Interface/Interface.lua
 Interface/AuraImportElement.lua
 Interface/AuraUpdater.lua
 Interface/AuraChecker.lua
+Interface/AddonChecker.lua
 
 AwakeningUpdater.lua
