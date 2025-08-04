@@ -323,7 +323,6 @@ end
 
 function AUP:IsAddon(name)
     if not name then return false end
-
     for _, addonName in ipairs(AUP.AddonsList) do
         if addonName == name then
             return true

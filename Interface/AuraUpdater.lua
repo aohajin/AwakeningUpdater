@@ -61,7 +61,7 @@ local function BuildAuraImportElements()
 
     for displayName, highestSeenVersion in pairs(AUP.highestSeenVersionsTable) do
         repeat
-            if AUP.IsAddon(displayName) then
+            if AUP:IsAddon(displayName) then
                 -- This is an add-on, not a WeakAura
                 break
             end
@@ -179,7 +179,7 @@ local function ReceiveVersions(_, payload, _, sender)
     end
 
     for displayName, version in pairs(versionsTable) do
-        if AUP.IsAddon(displayName) then
+        if AUP:IsAddon(displayName) then
             -- This is an add-on, not a WeakAura, use version list table
             table.insert(AUP.highestSeenVersionsTable[displayName], version)
         else

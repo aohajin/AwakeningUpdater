@@ -21,7 +21,7 @@ function AUP:InitializeInterface()
     local title = AUP.window.moverFrame:CreateFontString(nil, "OVERLAY")
     title:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
     title:SetPoint("CENTER", AUP.window.moverFrame, "CENTER", 0, 0)
-    title:SetText("觉醒Raid配置同步工具")
+    title:SetText("觉醒Raid Tools")
 
     -- 按钮框架
     local buttonFrame = CreateFrame("Frame", nil, AUP.window)
@@ -34,21 +34,27 @@ function AUP:InitializeInterface()
     AUP.updateWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
     AUP.updateWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
 
+    AUP.waCheckWindow = CreateFrame("Frame", nil, AUP.window)
+    AUP.waCheckWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
+    AUP.waCheckWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
+    AUP.waCheckWindow:Hide()
+
     AUP.addonCheckWindow = CreateFrame("Frame", nil, AUP.window)
     AUP.addonCheckWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
     AUP.addonCheckWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
     AUP.addonCheckWindow:Hide()
 
-    AUP.waCheckWindow = CreateFrame("Frame", nil, AUP.window)
-    AUP.waCheckWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
-    AUP.waCheckWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
-    AUP.waCheckWindow:Hide()
+    AUP.noteCheckWindow = CreateFrame("Frame", nil, AUP.window)
+    AUP.noteCheckWindow:SetPoint("TOPLEFT", buttonFrame, "BOTTOMLEFT")
+    AUP.noteCheckWindow:SetPoint("BOTTOMRIGHT", AUP.window, "BOTTOMRIGHT")
+    AUP.noteCheckWindow:Hide()
 
     -- 面板配置
     local panelDefinitions = {
         { label = "WA更新", panel = AUP.updateWindow, color = AUP.gs.visual.colorStrings.white },
         { label = "WA检查", panel = AUP.waCheckWindow, color = AUP.gs.visual.colorStrings.white },
         { label = "插件检查", panel = AUP.addonCheckWindow, color = AUP.gs.visual.colorStrings.white },
+        { label = "战术板检查", panel = AUP.noteCheckWindow, color = AUP.gs.visual.colorStrings.white },
     }
 
     -- 自动生成按钮组

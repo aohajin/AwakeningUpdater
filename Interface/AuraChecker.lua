@@ -32,11 +32,11 @@ end
 local function PositionAuraLabels(_, width)
     local firstVersionFrameX = nameFrameWidth + versionFramePaddingLeft
     local versionFramesTotalWidth = width - firstVersionFrameX - versionFramePaddingRight - elementHeight
-    local versionFrameSpacing = versionFramesTotalWidth / (#labels - 1)
+    local versionFrameSpacing = versionFramesTotalWidth / (#labels)
 
     for i, versionFrame in ipairs(labels) do
         versionFrame:SetPoint("BOTTOM", labelFrame, "BOTTOMLEFT",
-            firstVersionFrameX + (i - 1) * versionFrameSpacing + 0.5 * elementHeight, 0)
+            firstVersionFrameX + i * versionFrameSpacing + 0.5 * elementHeight, 0)
     end
 end
 
@@ -53,7 +53,7 @@ local function BuildAuraLabels()
     local sortedLabelTable = {}
 
     for displayName in pairs(AUP.highestSeenVersionsTable) do
-        if not AUP.IsAddon(displayName) then
+        if not AUP:IsAddon(displayName) then
             -- This is a WeakAura, not an add-on
             table.insert(sortedLabelTable, displayName)
         end
@@ -115,7 +115,7 @@ function AUP:UpdateCheckElementForUnit(unit, versionsTable)
     -- Set version to -1 if no version table was provided (i.e. we have no info for this unit)
     for displayName, highestVersion in pairs(AUP.highestSeenVersionsTable) do
         repeat
-            if AUP.IsAddon(displayName) then break end -- This is an add-on, not a WeakAura
+            if AUP:IsAddon(displayName) then break end -- This is an add-on, not a WeakAura
 
             local version = versionsTable and versionsTable[displayName] or 0
             local versionsBehind = versionsTable and highestVersion - version or -1
@@ -257,10 +257,10 @@ local function CheckElementInitializer(frame, data)
         function frame.PositionVersionFrames(_, width)
             local firstVersionFrameX = nameFrameWidth + versionFramePaddingLeft
             local versionFramesTotalWidth = width - firstVersionFrameX - versionFramePaddingRight - elementHeight
-            local versionFrameSpacing = versionFramesTotalWidth / (#frame.versionFrames - 1)
+            local versionFrameSpacing = versionFramesTotalWidth / (#frame.versionFrames)
 
             for i, versionFrame in ipairs(frame.versionFrames) do
-                versionFrame:SetPoint("LEFT", frame, "LEFT", firstVersionFrameX + (i - 1) * versionFrameSpacing, 0)
+                versionFrame:SetPoint("LEFT", frame, "LEFT", firstVersionFrameX + i * versionFrameSpacing, 0)
             end
         end
     end
