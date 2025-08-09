@@ -13,10 +13,12 @@ AddonsList.lua
 WeakAuras.lua
 WeakAurasImporter.lua
 Utility.lua
+Raven.lua
 
 Interface/Window.lua
 Interface/Interface.lua
 Interface/AuraImportElement.lua
+Interface/CheckerDataProvider.lua
 Interface/AuraUpdater.lua
 Interface/AuraChecker.lua
 Interface/AddonChecker.lua

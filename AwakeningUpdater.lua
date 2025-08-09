@@ -20,8 +20,10 @@ eventFrame:SetScript(
 
                 AUP:InitializeWeakAurasImporter()
                 AUP:InitializeInterface()
+                AUP:InitializeCheckerDataProvider()
                 AUP:InitializeAuraUpdater()
                 AUP:InitializeAuraChecker()
+                AUP:InitializeAddonChecker()
             end
         end
     end
