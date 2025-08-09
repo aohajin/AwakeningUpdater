@@ -23,7 +23,7 @@ eventFrame:SetScript(
                 AUP:InitializeCheckerDataProvider()
                 AUP:InitializeAuraUpdater()
                 AUP:InitializeAuraChecker()
-                AUP:InitializeAddonChecker()
+                --AUP:InitializeAddonChecker()
             end
         end
     end

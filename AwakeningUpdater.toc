@@ -21,6 +21,5 @@ Interface/AuraImportElement.lua
 Interface/CheckerDataProvider.lua
 Interface/AuraUpdater.lua
 Interface/AuraChecker.lua
-Interface/AddonChecker.lua
 
 AwakeningUpdater.lua
