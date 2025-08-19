@@ -2,6 +2,7 @@ local _, AUP = ...
 local dataProvider
 local guidToVersionsTable = {}
 
+
 -- Checks a unit's new version table against their known one
 -- Returns true if something changed
 local function ShouldUpdate(GUID, newVersionsTable)
@@ -49,33 +50,60 @@ function AUP:UpdateCheckElementForUnit(unit, versionsTable)
         unit = unit,
         name = name, -- Used for sorting
         coloredName = coloredName,
-        versionsBehindTable = {},
+        waVersionsBehindTable = {},
+        addonTable = {},
 
         --TODO
     }
 
     -- Compare unit's versions against the highest ones we've seen so far
     -- Set version to -1 if no version table was provided (i.e. we have no info for this unit)
-    for displayName, highestVersion in pairs(AUP.highestSeenVersionsTable) do
-        repeat
-            if AUP:IsAddon(displayName) then break end -- This is an add-on, not a WeakAura
+    for displayName, highestVersion in pairs(AUP.highestSeenAuraVersionsTable) do
+        local version = versionsTable and versionsTable[displayName] or 0
+        local versionsBehind = versionsTable and highestVersion - version or -1
 
-            local version = versionsTable and versionsTable[displayName] or 0
-            local versionsBehind = versionsTable and highestVersion - version or -1
+        table.insert(
+            data.waVersionsBehindTable,
+            {
+                displayName = displayName,
+                versionsBehind = versionsBehind
+            }
+        )
+    end
 
-            table.insert(
-                data.versionsBehindTable,
+    --[[AUP.addonVersionDiffTable = map addon name of below
+        {
+            myVersion = C_AddOns.GetAddOnMetadata(addon, "Version") or "None",
+            diff = {
                 {
-                    displayName = displayName,
-                    versionsBehind = versionsBehind
+                    sender = sender,
+                    version = version
                 }
-            )
-        until true
+            }
+        }
+    ]]
+    for _, displayName in ipairs(AUP.AddonsList) do
+        -- no versionTable means that player dont have au addon
+        local unitVersion = versionsTable and versionsTable[displayName] or nil
+        table.insert(
+            data.addonTable,
+            {
+                displayName = displayName,
+                unitVersion = unitVersion,
+            }
+        )
     end
 
     -- Sort the aura versions so they match the labels
     table.sort(
-        data.versionsBehindTable,
+        data.waVersionsBehindTable,
+        function(info1, info2)
+            return info1.displayName < info2.displayName
+        end
+    )
+
+    table.sort(
+        data.addonTable,
         function(info1, info2)
             return info1.displayName < info2.displayName
         end
@@ -124,17 +152,17 @@ function AUP:InitializeCheckerDataProvider()
 
     dataProvider:SetSortComparator(
         function(data1, data2)
-            local hasInfo1 = next(data1.versionsBehindTable)
-            local hasInfo2 = next(data2.versionsBehindTable)
+            local hasInfo1 = next(data1.waVersionsBehindTable)
+            local hasInfo2 = next(data2.waVersionsBehindTable)
 
             local versionsBehindCount1 = 0
             local versionsBehindCount2 = 0
 
-            for _, versionInfo in ipairs(data1.versionsBehindTable) do
+            for _, versionInfo in ipairs(data1.waVersionsBehindTable) do
                 versionsBehindCount1 = versionsBehindCount1 + versionInfo.versionsBehind
             end
 
-            for _, versionInfo in ipairs(data2.versionsBehindTable) do
+            for _, versionInfo in ipairs(data2.waVersionsBehindTable) do
                 versionsBehindCount2 = versionsBehindCount2 + versionInfo.versionsBehind
             end
 

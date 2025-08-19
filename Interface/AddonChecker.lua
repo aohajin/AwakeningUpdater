@@ -9,7 +9,7 @@ local elementHeight = 32
 local scrollFrame, scrollBar, scrollView, labelFrame
 local labels = {} -- Label fontstrings
 
-local function PositionAuraLabels(_, width)
+local function PositionAddonLabels(_, width)
     local firstVersionFrameX = nameFrameWidth + versionFramePaddingLeft
     local versionFramesTotalWidth = width - firstVersionFrameX - versionFramePaddingRight - elementHeight
     local versionFrameSpacing = versionFramesTotalWidth / (#labels)
@@ -20,19 +20,19 @@ local function PositionAuraLabels(_, width)
     end
 end
 
-local function BuildAuraLabels()
+local function BuildAddonLabels()
     if not labelFrame then
-        labelFrame = CreateFrame("Frame", nil, AUP.waCheckWindow)
+        labelFrame = CreateFrame("Frame", nil, AUP.addonCheckWindow)
         labelFrame:SetPoint("BOTTOMLEFT", scrollFrame, "TOPLEFT", 0, 4)
         labelFrame:SetPoint("BOTTOMRIGHT", scrollFrame, "TOPRIGHT", 0, 4)
         labelFrame:SetHeight(24)
 
-        labelFrame:SetScript("OnSizeChanged", PositionAuraLabels)
+        labelFrame:SetScript("OnSizeChanged", PositionAddonLabels)
     end
 
     local sortedLabelTable = {}
 
-    for displayName in pairs(AUP.highestSeenAuraVersionsTable) do
+    for _, displayName in ipairs(AUP.AddonsList) do
         table.insert(sortedLabelTable, displayName)
     end
 
@@ -54,11 +54,11 @@ local function BuildAuraLabels()
         labels[i]:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.white, displayName))
     end
 
-    PositionAuraLabels(nil, scrollFrame:GetWidth())
+    PositionAddonLabels(nil, scrollFrame:GetWidth())
 end
 
 local function CheckElementInitializer(frame, data)
-    local versionFrameCount = #data.waVersionsBehindTable
+    local versionFrameCount = #data.addonTable
 
     -- Create version frames
     if not frame.versionFrames then frame.versionFrames = {} end
@@ -80,37 +80,44 @@ local function CheckElementInitializer(frame, data)
 
     frame.coloredName:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.white, data.coloredName))
 
-    for i, versionInfo in ipairs(data.waVersionsBehindTable) do
-        local versionsBehind = versionInfo.versionsBehind
+    --[[
+    data.addonTable = list of below
+                {
+                    displayName = displayName,
+                    unitVersion = unitVersion,
+                }
+    ]]
+    for i, versionInfo in ipairs(data.addonTable) do
+        local version      = versionInfo.unitVersion
+        local displayName  = versionInfo.displayName
+
+        local myVersion    = C_AddOns.GetAddOnMetadata(displayName, "Version") or "None"
+
         local versionFrame = frame.versionFrames[i]
 
-        if not versionFrame.versionsBehindText then
-            versionFrame.versionsBehindText = versionFrame:CreateFontString(nil, "OVERLAY")
+        if not versionFrame.versionsText then
+            versionFrame.versionsText = versionFrame:CreateFontString(nil, "OVERLAY")
 
-            versionFrame.versionsBehindText:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
-            versionFrame.versionsBehindText:SetPoint("CENTER", versionFrame, "CENTER")
+            versionFrame.versionsText:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
+            versionFrame.versionsText:SetPoint("CENTER", versionFrame, "CENTER")
         end
 
-        if not versionFrame.versionsBehindIcon then
-            versionFrame.versionsBehindIcon = CreateFrame("Frame", nil, versionFrame)
-            versionFrame.versionsBehindIcon:SetSize(24, 24)
-            versionFrame.versionsBehindIcon:SetPoint("CENTER", versionFrame, "CENTER")
+        if not versionFrame.versionsIcon then
+            versionFrame.versionsIcon = CreateFrame("Frame", nil, versionFrame)
+            versionFrame.versionsIcon:SetSize(24, 24)
+            versionFrame.versionsIcon:SetPoint("CENTER", versionFrame, "CENTER")
 
-            versionFrame.versionsBehindIcon.tex = versionFrame.versionsBehindIcon:CreateTexture(nil, "BACKGROUND")
-            versionFrame.versionsBehindIcon.tex:SetAllPoints()
+            versionFrame.versionsIcon.tex = versionFrame.versionsIcon:CreateTexture(nil, "BACKGROUND")
+            versionFrame.versionsIcon.tex:SetAllPoints()
         end
 
-        if versionsBehind == 0 then
-            versionFrame.versionsBehindText:Hide()
-            versionFrame.versionsBehindIcon:Show()
+        -- 四种情况
+        -- 未知版本 显示问号
+        -- 你自己是None，显示蓝色版本号
+        -- 不同版本 显示红色版本号
+        -- 相同版本 显示绿色版本号
 
-            versionFrame.versionsBehindIcon.tex:SetAtlas("common-icon-checkmark")
-
-            AUP:AddTooltip(
-                versionFrame,
-                "该玩家的WA都是最新的."
-            )
-        elseif versionsBehind == -1 then
+        if version == nil then
             versionFrame.versionsBehindText:Hide()
             versionFrame.versionsBehindIcon:Show()
 
@@ -118,18 +125,38 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                "无法获取该玩家的WA信息.|n|n可能并没有装AwakeningUpdater插件."
+                "无法获取该玩家的插件信息.|n|n可能并没有装AwakeningUpdater插件."
             )
-        else
+        elseif myVersion == "None" then
+            versionFrame.versionsBehindText:Show()
+            versionFrame.versionsBehindIcon:Hide()
+
+            versionFrame.versionsBehindText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, version))
+
+            AUP:AddTooltip(
+                versionFrame,
+                string.format("该玩家的WA版本是%s，但你没有安装该插件.", version)
+            )
+        elseif version ~= myVersion then
             versionFrame.versionsBehindText:Show()
             versionFrame.versionsBehindIcon:Hide()
 
             versionFrame.versionsBehindText:SetText(string.format("|cff%s%d|r", AUP.gs.visual.colorStrings.red,
-                versionsBehind))
+                version))
 
             AUP:AddTooltip(
                 versionFrame,
-                string.format("此玩家的WA落后%d个版本.", versionsBehind)
+                string.format("此玩家的该插件版本与你不同，你的是%s", myVersion)
+            )
+        else
+            versionFrame.versionsBehindText:Hide()
+            versionFrame.versionsBehindIcon:Show()
+
+            versionFrame.versionsBehindIcon.tex:SetAtlas("common-icon-checkmark")
+
+            AUP:AddTooltip(
+                versionFrame,
+                "该玩家的插件版本与你相同."
             )
         end
     end
@@ -152,11 +179,11 @@ local function CheckElementInitializer(frame, data)
 end
 
 function AUP:InitializeAuraChecker()
-    scrollFrame = CreateFrame("Frame", nil, AUP.waCheckWindow, "WowScrollBoxList")
-    scrollFrame:SetPoint("TOPLEFT", AUP.waCheckWindow, "TOPLEFT", 4, -32)
-    scrollFrame:SetPoint("BOTTOMRIGHT", AUP.waCheckWindow, "BOTTOMRIGHT", -24, 4)
+    scrollFrame = CreateFrame("Frame", nil, AUP.addonCheckWindow, "WowScrollBoxList")
+    scrollFrame:SetPoint("TOPLEFT", AUP.addonCheckWindow, "TOPLEFT", 4, -32)
+    scrollFrame:SetPoint("BOTTOMRIGHT", AUP.addonCheckWindow, "BOTTOMRIGHT", -24, 4)
 
-    scrollBar = CreateFrame("EventFrame", nil, AUP.waCheckWindow, "MinimalScrollBar")
+    scrollBar = CreateFrame("EventFrame", nil, AUP.addonCheckWindow, "MinimalScrollBar")
     scrollBar:SetPoint("TOP", scrollFrame, "TOPRIGHT", 12, 0)
     scrollBar:SetPoint("BOTTOM", scrollFrame, "BOTTOMRIGHT", 12, 16)
 
@@ -177,5 +204,5 @@ function AUP:InitializeAuraChecker()
     scrollFrame:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
 
     --register raven event
-    AUP.Raven:on("DATA_UPDATED", BuildAuraLabels)
+    AUP.Raven:on("DATA_UPDATED", BuildAddonLabels)
 end

@@ -59,13 +59,8 @@ local function BuildAuraImportElements()
     -- Check which auras require updates
     local aurasToUpdate = {}
 
-    for displayName, highestSeenVersion in pairs(AUP.highestSeenVersionsTable) do
+    for displayName, highestSeenVersion in pairs(AUP.highestSeenAuraVersionsTable) do
         repeat
-            if AUP:IsAddon(displayName) then
-                -- This is an add-on, not a WeakAura
-                break
-            end
-
             local auraData = AwakeningUpdaterSaved.WeakAuras[displayName]
             local uid = auraData and auraData.d.uid
             local importedVersion = auraData and auraData.d.AwakeningVersion or 0
@@ -179,14 +174,27 @@ local function ReceiveVersions(_, payload, _, sender)
     end
 
     for displayName, version in pairs(versionsTable) do
-        if AUP:IsAddon(displayName) then
-            -- This is an add-on, not a WeakAura, use version list table
-            table.insert(AUP.highestSeenVersionsTable[displayName], version)
-        else
+        if not AUP.IsAddon(displayName) then
+            --     -- check addon version
+            --     local myVersion = AUP.addonVersionDiffTable[displayName].myVersion or "None"
+
+            --     if version ~= myVersion then
+            --         table.insert(
+            --             AUP.addonVersionDiffTable[displayName].diff,
+            --             {
+            --                 sender = sender,
+            --                 version = version
+            --             }
+            --         )
+
+            --         shouldFullRebuild = true
+            --     end
+            -- else
+            --
             -- check wa version
-            local highestSeenVersion = AUP.highestSeenVersionsTable[displayName]
+            local highestSeenVersion = AUP.highestSeenAuraVersionsTable[displayName]
             if not highestSeenVersion or highestSeenVersion < version then
-                AUP.highestSeenVersionsTable[displayName] = version
+                AUP.highestSeenAuraVersionsTable[displayName] = version
 
                 shouldFullRebuild = true
             end
@@ -203,23 +211,25 @@ local function ReceiveVersions(_, payload, _, sender)
 end
 
 function AUP:InitializeAuraUpdater()
-    AUP.highestSeenVersionsTable = {
-        --AwakeningUpdater = tonumber(C_AddOns.GetAddOnMetadata(addOnName, "Version")) -- AddOn version
-    }
-
-    for _, addon in ipairs(AUP.AddonsList) do
-        -- keep the string version
-        -- first is your version
-        AUP.highestSeenVersionsTable[addon] = { C_AddOns.GetAddOnMetadata(addon, "Version") }
-    end
-
     AceComm:RegisterComm("AU_Request", BroadcastVersions)
     AceComm:RegisterComm("AU_Versions", ReceiveVersions)
 
+
+    AUP.highestSeenAuraVersionsTable = {}
+    -- AUP.addonVersionDiffTable = {}
+
+    -- for _, addon in ipairs(AUP.AddonsList) do
+    --     -- keep the string version
+    --     -- first is your version
+    --     AUP.addonVersionDiffTable[addon] = {
+    --         myVersion = C_AddOns.GetAddOnMetadata(addon, "Version") or "None",
+    --         diff = {}
+    --     }
+    -- end
     for displayName, auraData in pairs(AwakeningUpdaterSaved.WeakAuras) do
         auraUIDs[auraData.d.uid] = true
 
-        AUP.highestSeenVersionsTable[displayName] = auraData.d.AwakeningVersion
+        AUP.highestSeenAuraVersionsTable[displayName] = auraData.d.AwakeningVersion
     end
 
     if WeakAuras and WeakAurasSaved and WeakAurasSaved.displays then
