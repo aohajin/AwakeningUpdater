@@ -118,30 +118,30 @@ local function CheckElementInitializer(frame, data)
         -- 相同版本 显示绿色版本号
 
         if version == nil then
-            versionFrame.versionsBehindText:Hide()
-            versionFrame.versionsBehindIcon:Show()
+            versionFrame.versionsText:Hide()
+            versionFrame.versionsIcon:Show()
 
-            versionFrame.versionsBehindIcon.tex:SetAtlas("QuestTurnin")
+            versionFrame.versionsIcon.tex:SetAtlas("QuestTurnin")
 
             AUP:AddTooltip(
                 versionFrame,
                 "无法获取该玩家的插件信息.|n|n可能并没有装AwakeningUpdater插件."
             )
         elseif myVersion == "None" then
-            versionFrame.versionsBehindText:Show()
-            versionFrame.versionsBehindIcon:Hide()
+            versionFrame.versionsText:Show()
+            versionFrame.versionsIcon:Hide()
 
-            versionFrame.versionsBehindText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, version))
+            versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, version))
 
             AUP:AddTooltip(
                 versionFrame,
                 string.format("该玩家的WA版本是%s，但你没有安装该插件.", version)
             )
         elseif version ~= myVersion then
-            versionFrame.versionsBehindText:Show()
-            versionFrame.versionsBehindIcon:Hide()
+            versionFrame.versionsText:Show()
+            versionFrame.versionsIcon:Hide()
 
-            versionFrame.versionsBehindText:SetText(string.format("|cff%s%d|r", AUP.gs.visual.colorStrings.red,
+            versionFrame.versionsText:SetText(string.format("|cff%s%d|r", AUP.gs.visual.colorStrings.red,
                 version))
 
             AUP:AddTooltip(
@@ -149,10 +149,10 @@ local function CheckElementInitializer(frame, data)
                 string.format("此玩家的该插件版本与你不同，你的是%s", myVersion)
             )
         else
-            versionFrame.versionsBehindText:Hide()
-            versionFrame.versionsBehindIcon:Show()
+            versionFrame.versionsText:Hide()
+            versionFrame.versionsIcon:Show()
 
-            versionFrame.versionsBehindIcon.tex:SetAtlas("common-icon-checkmark")
+            versionFrame.versionsIcon.tex:SetAtlas("common-icon-checkmark")
 
             AUP:AddTooltip(
                 versionFrame,
