@@ -4,6 +4,7 @@ AUP.AddonsList = {
     "AwakeningUpdater",
     "MRT",
     "WeakAuras",
+    "NorthernSkyRaidTools",
 }
 
 AUP.NotesList = {
