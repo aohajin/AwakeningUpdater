@@ -1,5 +1,5 @@
-## Interface: 110105
-## Version: 1
+## Interface: 110200
+## Version: 2
 ## Title: Awakening Updater
 ## Author: 怨念物
 ## SavedVariables: AwakeningUpdaterSaved
