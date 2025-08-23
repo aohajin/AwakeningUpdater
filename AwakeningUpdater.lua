@@ -5,32 +5,28 @@ _G["AUP"] = AUP
 --local LDBIcon = LibStub("LibDBIcon-1.0")
 local eventFrame = CreateFrame("Frame")
 
-eventFrame:RegisterEvent("ADDON_LOADED")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
 
 eventFrame:SetScript(
     "OnEvent",
     function(_, event, ...)
-        if event == "ADDON_LOADED" then
-            local addOnName = ...
-
-            if addOnName == "AwakeningUpdater" then
-                if not AwakeningUpdaterSaved then AwakeningUpdaterSaved = {} end
-                if not AwakeningUpdaterSaved.settings then AwakeningUpdaterSaved.settings = {} end
-                if not AwakeningUpdaterSaved.settings.frames then AwakeningUpdaterSaved.settings.frames = {} end
+        if event == "PLAYER_LOGIN" then
+            if not AwakeningUpdaterSaved then AwakeningUpdaterSaved = {} end
+            if not AwakeningUpdaterSaved.settings then AwakeningUpdaterSaved.settings = {} end
+            if not AwakeningUpdaterSaved.settings.frames then AwakeningUpdaterSaved.settings.frames = {} end
 
 
-                AUP:InitializeWeakAurasImporter()
-                AUP:InitializeInterface()
+            AUP:InitializeWeakAurasImporter()
+            AUP:InitializeInterface()
 
-                AUP:InitializeCheckerDataProvider()
-                AUP:InitializeAuraUpdater()
+            AUP:InitializeCheckerDataProvider()
+            AUP:InitializeAuraUpdater()
 
-                AUP:InitializeAuraChecker()
-                AUP:InitializeAddonChecker()
-                AUP:InitializeNoteChecker()
+            AUP:InitializeAuraChecker()
+            AUP:InitializeAddonChecker()
+            AUP:InitializeNoteChecker()
 
-                AUP:RebuildAllCheckElements()
-            end
+            AUP:RebuildAllCheckElements()
         end
     end
 )

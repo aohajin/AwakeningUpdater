@@ -9,7 +9,7 @@ local elementHeight = 32
 local scrollFrame, scrollBar, scrollView, labelFrame
 local labels = {} -- Label fontstrings
 
-local function PositionAddonLabels(_, width)
+local function PositionNoteLabels(_, width)
     local firstVersionFrameX = nameFrameWidth + versionFramePaddingLeft
     local versionFramesTotalWidth = width - firstVersionFrameX - versionFramePaddingRight - elementHeight
     local versionFrameSpacing = versionFramesTotalWidth / (#labels)
@@ -20,14 +20,14 @@ local function PositionAddonLabels(_, width)
     end
 end
 
-local function BuildAddonLabels()
+local function BuildNoteLabels()
     if not labelFrame then
         labelFrame = CreateFrame("Frame", nil, AUP.noteCheckWindow)
         labelFrame:SetPoint("BOTTOMLEFT", scrollFrame, "TOPLEFT", 0, 4)
         labelFrame:SetPoint("BOTTOMRIGHT", scrollFrame, "TOPRIGHT", 0, 4)
         labelFrame:SetHeight(24)
 
-        labelFrame:SetScript("OnSizeChanged", PositionAddonLabels)
+        labelFrame:SetScript("OnSizeChanged", PositionNoteLabels)
     end
 
     local sortedLabelTable = {}
@@ -54,11 +54,11 @@ local function BuildAddonLabels()
         labels[i]:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.white, displayName))
     end
 
-    PositionAddonLabels(nil, scrollFrame:GetWidth())
+    PositionNoteLabels(nil, scrollFrame:GetWidth())
 end
 
 local function CheckElementInitializer(frame, data)
-    local versionFrameCount = #data.addonTable
+    local versionFrameCount = #data.noteTable
 
     -- Create version frames
     if not frame.versionFrames then frame.versionFrames = {} end
@@ -204,5 +204,5 @@ function AUP:InitializeNoteChecker()
     scrollFrame:SetBorderColor(borderColor.r, borderColor.g, borderColor.b)
 
     --register raven event
-    AUP.Raven:on("DATA_UPDATED", BuildAddonLabels)
+    AUP.Raven:on("DATA_UPDATED", BuildNoteLabels)
 end

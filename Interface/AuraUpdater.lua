@@ -231,8 +231,6 @@ function AUP:InitializeAuraUpdater()
     for displayName, auraData in pairs(AwakeningUpdaterSaved.WeakAuras) do
         auraUIDs[auraData.d.uid] = true
 
-        print(displayName)
-
         AUP.highestSeenAuraVersionsTable[displayName] = auraData.d.AwakeningVersion
     end
 
@@ -300,10 +298,14 @@ local function OnEvent(_, event)
         local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or "PARTY"
 
         RequestVersions(chatType)
+    elseif event == "MRT_NOTE_UPDATE" then
+        QueueUpdate()
+        RequestVersions(chatType)
     end
 end
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("GROUP_ROSTER_UPDATE")
 f:RegisterEvent("GROUP_JOINED")
+f:RegisterEvent("MRT_NOTE_UPDATE")
 f:SetScript("OnEvent", OnEvent)
