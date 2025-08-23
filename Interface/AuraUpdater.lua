@@ -281,7 +281,7 @@ function AUP:InitializeAuraUpdater()
 
         hooksecurefunc(
             WeakAuras,
-            "ScanEvent",
+            "ScanEvents",
             function(ev, ...)
                 if ev == "MRT_NOTE_UPDATE" then
                     QueueUpdate()
