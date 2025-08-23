@@ -281,14 +281,16 @@ function AUP:InitializeAuraUpdater()
 
         hooksecurefunc(
             WeakAuras,
-            "MRT_NOTE_UPDATE",
-            function(data)
-                QueueUpdate()
+            "ScanEvent",
+            function(ev, ...)
+                if ev == "MRT_NOTE_UPDATE" then
+                    QueueUpdate()
 
-                local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or
-                    "PARTY"
+                    local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or
+                        "PARTY"
 
-                RequestVersions(chatType)
+                    RequestVersions(chatType)
+                end
             end
         )
     end
