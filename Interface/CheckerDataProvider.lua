@@ -52,6 +52,7 @@ function AUP:UpdateCheckElementForUnit(unit, versionsTable)
         coloredName = coloredName,
         waVersionsBehindTable = {},
         addonTable = {},
+        noteTable = {},
 
         --TODO
     }
@@ -90,6 +91,18 @@ function AUP:UpdateCheckElementForUnit(unit, versionsTable)
             {
                 displayName = displayName,
                 unitVersion = unitVersion,
+            }
+        )
+    end
+
+    for _, displayName in ipairs(AUP.NotesList) do
+        -- no versionTable means that player dont have au addon
+        local unitNote = versionsTable and versionsTable[displayName] or nil
+        table.insert(
+            data.noteTable,
+            {
+                displayName = displayName,
+                unitNote = unitNote,
             }
         )
     end

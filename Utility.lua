@@ -331,3 +331,48 @@ function AUP:IsAddon(name)
 
     return false
 end
+
+function AUP:GetNsNote() -- Get rid of extra spaces and color coding. Also converts nicknames
+    if not C_AddOns.IsAddOnLoaded("MRT") then
+        print("Addon MRT is disabled, can't read the note")
+        return "empty"
+    end
+    if not VMRT.Note.Text1 then
+        print("No MRT Note found")
+        return "empty"
+    end
+    local persnote = _G.VMRT.Note.SelfText or ""
+    persnote = strtrim(persnote)
+
+    local note = _G.VMRT.Note.Text1 or ""
+    if (not AUP.RawNote) or AUP.RawNote ~= note then -- only do this if the note has changed or not been checked at all this session
+        AUP.RawNote = note
+
+        local newnote = ""
+        local list = false
+        note = strtrim(note)
+        for line in note:gmatch('[^\r\n]+') do
+            line = strtrim(line)
+
+            --check for start/end of the name list
+            if string.match(line, "ns.*start") or line == "intstart" then -- match any string that starts with "ns" and ends with "start" as well as the interrupt WA
+                list = true
+            elseif string.match(line, "ns.*end") or line == "intend" then
+                list = false
+                newnote = newnote .. line .. "\n"
+            end
+            if list then
+                newnote = newnote .. line .. "\n"
+            end
+        end
+        if disablecheck then return "" end          -- if all we care about is checking if assignments are disabled then just return an empty string early.
+        note = newnote
+        note = note:gsub("||r", "")                 -- clean colorcode
+        note = note:gsub("||c%x%x%x%x%x%x%x%x", "") -- clean colorcode
+
+        AUP.Note = note
+    end
+
+    AUP.Note = AUP.Note or ""
+    return AUP.Note
+end

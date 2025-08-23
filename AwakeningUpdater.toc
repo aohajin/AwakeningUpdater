@@ -22,5 +22,6 @@ Interface/CheckerDataProvider.lua
 Interface/AuraUpdater.lua
 Interface/AuraChecker.lua
 Interface/AddonChecker.lua
+Interface/NoteChecker.lua
 
 AwakeningUpdater.lua

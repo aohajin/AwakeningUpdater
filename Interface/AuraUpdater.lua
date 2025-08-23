@@ -33,6 +33,8 @@ local function SerializeVersionsTable()
         versionsTable[displayName] = installedVersion
     end
 
+    versionsTable["[NsNote]"] = AUP:GetNsNote()
+
     local serialized = LibSerialize:Serialize(versionsTable)
     local compressed = LibDeflate:CompressDeflate(serialized, { level = 9 })
     local encoded = LibDeflate:EncodeForWoWAddonChannel(compressed)

@@ -74,7 +74,7 @@ local function CheckElementInitializer(frame, data)
     if not frame.coloredName then
         frame.coloredName = frame:CreateFontString(nil, "OVERLAY")
 
-        frame.coloredName:SetFont(AUP.gs.visual.font, 18, AUP.gs.visual.fontFlags)
+        frame.coloredName:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
         frame.coloredName:SetPoint("LEFT", frame, "LEFT", 8, 0)
     end
 

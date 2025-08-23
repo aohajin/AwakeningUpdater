@@ -26,6 +26,7 @@ eventFrame:SetScript(
 
                 AUP:InitializeAuraChecker()
                 AUP:InitializeAddonChecker()
+                AUP:InitializeNoteChecker()
 
                 AUP:RebuildAllCheckElements()
             end

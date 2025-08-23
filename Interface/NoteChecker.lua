@@ -22,7 +22,7 @@ end
 
 local function BuildAddonLabels()
     if not labelFrame then
-        labelFrame = CreateFrame("Frame", nil, AUP.addonCheckWindow)
+        labelFrame = CreateFrame("Frame", nil, AUP.noteCheckWindow)
         labelFrame:SetPoint("BOTTOMLEFT", scrollFrame, "TOPLEFT", 0, 4)
         labelFrame:SetPoint("BOTTOMRIGHT", scrollFrame, "TOPRIGHT", 0, 4)
         labelFrame:SetHeight(24)
@@ -32,7 +32,7 @@ local function BuildAddonLabels()
 
     local sortedLabelTable = {}
 
-    for _, displayName in ipairs(AUP.AddonsList) do
+    for _, displayName in ipairs(AUP.NotesList) do
         table.insert(sortedLabelTable, displayName)
     end
 
@@ -81,17 +81,17 @@ local function CheckElementInitializer(frame, data)
     frame.coloredName:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.white, data.coloredName))
 
     --[[
-    data.addonTable = list of below
+    data.noteTable = list of below
                 {
                     displayName = displayName,
-                    unitVersion = unitVersion,
+                    note = note,
                 }
     ]]
-    for i, versionInfo in ipairs(data.addonTable) do
-        local version      = versionInfo.unitVersion
-        local displayName  = versionInfo.displayName
+    for i, noteInfo in ipairs(data.noteTable) do
+        local unitNote     = noteInfo.unitNote
+        local displayName  = noteInfo.displayName
 
-        local myVersion    = C_AddOns.GetAddOnMetadata(displayName, "Version") or "None"
+        local myNote       = AUP:GetNsNote()
 
         local versionFrame = frame.versionFrames[i]
 
@@ -113,11 +113,11 @@ local function CheckElementInitializer(frame, data)
 
         -- 四种情况
         -- 未知版本 显示问号
-        -- 你自己是None，显示蓝色版本号
+        -- 你自己是empty，显示蓝色"note"
         -- 不同版本 显示红色版本号
         -- 相同版本 显示绿色版本号
 
-        if version == nil then
+        if unitNote == nil then
             versionFrame.versionsText:Hide()
             versionFrame.versionsIcon:Show()
 
@@ -125,28 +125,28 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                "无法获取该玩家的插件信息.|n|n可能并没有装AwakeningUpdater插件."
+                "无法获取该玩家的战术版信息.|n|n可能并没有装AwakeningUpdater插件."
             )
-        elseif myVersion == "None" then
+        elseif myNote == "empty" then
             versionFrame.versionsText:Show()
             versionFrame.versionsIcon:Hide()
 
-            versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, version))
+            versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, "NOTE"))
 
             AUP:AddTooltip(
                 versionFrame,
-                string.format("该玩家的插件版本是%s，但你没有安装该插件.", version)
+                string.format("该玩家的战术板信息是%s，但你的战术板信息为空.", version)
             )
-        elseif version ~= myVersion then
+        elseif unitNote ~= myNote then
             versionFrame.versionsText:Show()
             versionFrame.versionsIcon:Hide()
 
             versionFrame.versionsText:SetText(string.format("|cff%s%d|r", AUP.gs.visual.colorStrings.red,
-                version))
+                "NOTE"))
 
             AUP:AddTooltip(
                 versionFrame,
-                string.format("此玩家的该插件版本与你不同，你的是%s", myVersion)
+                string.format("此玩家的战术板信息与你不同，你的是%s，他的是%s", myNote, unitNote)
             )
         else
             versionFrame.versionsText:Hide()
@@ -156,7 +156,7 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                string.format("此玩家的该插件版本与你相同，是%s", myVersion)
+                string.format("此玩家的战术板信息与你相同，是%s", myNote)
             )
         end
     end
@@ -178,12 +178,12 @@ local function CheckElementInitializer(frame, data)
     frame:SetScript("OnSizechanged", frame.PositionVersionFrames)
 end
 
-function AUP:InitializeAddonChecker()
-    scrollFrame = CreateFrame("Frame", nil, AUP.addonCheckWindow, "WowScrollBoxList")
-    scrollFrame:SetPoint("TOPLEFT", AUP.addonCheckWindow, "TOPLEFT", 4, -32)
-    scrollFrame:SetPoint("BOTTOMRIGHT", AUP.addonCheckWindow, "BOTTOMRIGHT", -24, 4)
+function AUP:InitializeNoteChecker()
+    scrollFrame = CreateFrame("Frame", nil, AUP.noteCheckWindow, "WowScrollBoxList")
+    scrollFrame:SetPoint("TOPLEFT", AUP.noteCheckWindow, "TOPLEFT", 4, -32)
+    scrollFrame:SetPoint("BOTTOMRIGHT", AUP.noteCheckWindow, "BOTTOMRIGHT", -24, 4)
 
-    scrollBar = CreateFrame("EventFrame", nil, AUP.addonCheckWindow, "MinimalScrollBar")
+    scrollBar = CreateFrame("EventFrame", nil, AUP.noteCheckWindow, "MinimalScrollBar")
     scrollBar:SetPoint("TOP", scrollFrame, "TOPRIGHT", 12, 0)
     scrollBar:SetPoint("BOTTOM", scrollFrame, "BOTTOMRIGHT", 12, 16)
 

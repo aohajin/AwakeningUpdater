@@ -19,9 +19,9 @@ function AUP:InitializeInterface()
 
     -- 标题
     local title = AUP.window.moverFrame:CreateFontString(nil, "OVERLAY")
-    title:SetFont(AUP.gs.visual.font, 12, AUP.gs.visual.fontFlags)
+    title:SetFont(AUP.gs.visual.font, 16, AUP.gs.visual.fontFlags)
     title:SetPoint("CENTER", AUP.window.moverFrame, "CENTER", 0, 0)
-    title:SetText("觉醒 Raid Tools")
+    title:SetText("覺 醒 Raid Tools")
 
     -- 按钮框架
     local buttonFrame = CreateFrame("Frame", nil, AUP.window)

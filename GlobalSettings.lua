@@ -10,7 +10,8 @@ AUP.gs = {
             white = "f5fcff",
             red = "fa143a",
             green = "25f737",
-            gray = "696969"
+            gray = "696969",
+            blue = "00bfff",
         }
     }
 }
