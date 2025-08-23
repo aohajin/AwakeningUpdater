@@ -141,7 +141,7 @@ local function CheckElementInitializer(frame, data)
             versionFrame.versionsText:Show()
             versionFrame.versionsIcon:Hide()
 
-            versionFrame.versionsText:SetText(string.format("|cff%s%d|r", AUP.gs.visual.colorStrings.red,
+            versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.red,
                 version))
 
             AUP:AddTooltip(
