@@ -176,7 +176,7 @@ local function ReceiveVersions(_, payload, _, sender)
     end
 
     for displayName, version in pairs(versionsTable) do
-        if not AUP:IsAddon(displayName) then
+        if AUP:IsWeakarua(displayName) then
             --     -- check addon version
             --     local myVersion = AUP.addonVersionDiffTable[displayName].myVersion or "None"
 

@@ -321,6 +321,17 @@ function AUP:ErrorPrint(text)
     print(string.format("AwakeningUpdater |cffff0000ERROR|r: %s", text))
 end
 
+function AUP:IsWeakarua(name)
+    if not name then return false end
+    for displayName, _ in ipairs(AwakeningUpdaterSaved.WeakAuras) do
+        if displayName == name then
+            return true
+        end
+    end
+
+    return false
+end
+
 function AUP:IsAddon(name)
     if not name then return false end
     for _, addonName in ipairs(AUP.AddonsList) do
