@@ -278,6 +278,19 @@ function AUP:InitializeAuraUpdater()
                 end
             end
         )
+
+        hooksecurefunc(
+            WeakAuras,
+            "MRT_NOTE_UPDATE",
+            function(data)
+                QueueUpdate()
+
+                local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or
+                    "PARTY"
+
+                RequestVersions(chatType)
+            end
+        )
     end
 
     allAurasUpdatedText = AUP.updateWindow:CreateFontString(nil, "OVERLAY")
@@ -298,16 +311,10 @@ local function OnEvent(_, event)
         local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or "PARTY"
 
         RequestVersions(chatType)
-    elseif event == "MRT_NOTE_UPDATE" then
-        QueueUpdate()
-        RequestVersions(chatType)
     end
 end
 
-function AUP:RegisterEvents()
-    local f = CreateFrame("Frame")
-    f:RegisterEvent("GROUP_ROSTER_UPDATE")
-    f:RegisterEvent("GROUP_JOINED")
-    f:RegisterEvent("MRT_NOTE_UPDATE")
-    f:SetScript("OnEvent", OnEvent)
-end
+local f = CreateFrame("Frame")
+f:RegisterEvent("GROUP_ROSTER_UPDATE")
+f:RegisterEvent("GROUP_JOINED")
+f:SetScript("OnEvent", OnEvent)
