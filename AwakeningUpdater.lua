@@ -16,6 +16,7 @@ eventFrame:SetScript(
             if not AwakeningUpdaterSaved.settings.frames then AwakeningUpdaterSaved.settings.frames = {} end
 
 
+            AUP:RegisterEvents()
             AUP:InitializeWeakAurasImporter()
             AUP:InitializeInterface()
 

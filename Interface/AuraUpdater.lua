@@ -304,8 +304,10 @@ local function OnEvent(_, event)
     end
 end
 
-local f = CreateFrame("Frame")
-f:RegisterEvent("GROUP_ROSTER_UPDATE")
-f:RegisterEvent("GROUP_JOINED")
-f:RegisterEvent("MRT_NOTE_UPDATE")
-f:SetScript("OnEvent", OnEvent)
+function AUP:RegisterEvents()
+    local f = CreateFrame("Frame")
+    f:RegisterEvent("GROUP_ROSTER_UPDATE")
+    f:RegisterEvent("GROUP_JOINED")
+    f:RegisterEvent("MRT_NOTE_UPDATE")
+    f:SetScript("OnEvent", OnEvent)
+end
