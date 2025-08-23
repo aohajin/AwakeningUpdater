@@ -12,14 +12,14 @@ function AUP:CreateWindow(name, exitable, movable, resizable)
     window.upperTexture = window:CreateTexture(nil, "OVERLAY")
     window.upperTexture:SetPoint("TOPLEFT", window, "TOPLEFT")
     window.upperTexture:SetPoint("BOTTOMRIGHT", window, "RIGHT")
-    window.upperTexture:SetTexture("Interface/Buttons/WHITE8x8")
-    window.upperTexture:SetGradient("VERTICAL", CreateColor(0 / 255, 21 / 255, 56 / 255, 1),
-        CreateColor(17 / 255, 62 / 255, 127 / 255, 1))
+    window.upperTexture:SetColorTexture(0 / 255, 0 / 255, 0 / 255, 1)
 
     window.lowerTexture = window:CreateTexture(nil, "OVERLAY")
     window.lowerTexture:SetPoint("TOPLEFT", window, "LEFT")
     window.lowerTexture:SetPoint("BOTTOMRIGHT", window, "BOTTOMRIGHT")
-    window.lowerTexture:SetColorTexture(0 / 255, 21 / 255, 56 / 255)
+    window.lowerTexture:SetTexture("Interface/Buttons/WHITE8x8")
+    window.lowerTexture:SetGradient("VERTICAL", CreateColor(37 / 255, 56 / 255, 89 / 255, 1),
+        CreateColor(0 / 255, 0 / 255, 0 / 255, 1))
 
     -- Border
     local borderColor = AUP.gs.visual.borderColor
@@ -92,19 +92,19 @@ function AUP:CreateWindow(name, exitable, movable, resizable)
         window.moverFrame.tex = window.moverFrame:CreateTexture(nil, "BACKGROUND")
         window.moverFrame.tex:SetPoint("TOPLEFT", window)
         window.moverFrame.tex:SetPoint("BOTTOMRIGHT", window, "TOPRIGHT", 0, -moverFrameHeight)
-        window.moverFrame.tex:SetColorTexture(0 / 255, 15 / 255, 41 / 255)
+        window.moverFrame.tex:SetColorTexture(30 / 255, 30 / 255, 30 / 255)
 
         window.moverFrame:SetScript(
             "OnEnter",
             function()
-                window.moverFrame.tex:SetColorTexture(0 / 255, 21 / 255, 56 / 255)
+                window.moverFrame.tex:SetColorTexture(40 / 255, 40 / 255, 56 / 255)
             end
         )
 
         window.moverFrame:SetScript(
             "OnLeave",
             function()
-                window.moverFrame.tex:SetColorTexture(0 / 255, 15 / 255, 41 / 255)
+                window.moverFrame.tex:SetColorTexture(30 / 255, 30 / 255, 30 / 255)
             end
         )
 

@@ -48,7 +48,7 @@ local function BuildAuraLabels()
         if not labels[i] then
             labels[i] = labelFrame:CreateFontString(nil, "OVERLAY")
 
-            labels[i]:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
+            labels[i]:SetFont(AUP.gs.visual.font, 12, AUP.gs.visual.fontFlags)
         end
 
         labels[i]:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.white, displayName))
@@ -74,7 +74,7 @@ local function CheckElementInitializer(frame, data)
     if not frame.coloredName then
         frame.coloredName = frame:CreateFontString(nil, "OVERLAY")
 
-        frame.coloredName:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
+        frame.coloredName:SetFont(AUP.gs.visual.font, 18, AUP.gs.visual.fontFlags)
         frame.coloredName:SetPoint("LEFT", frame, "LEFT", 8, 0)
     end
 
@@ -87,7 +87,7 @@ local function CheckElementInitializer(frame, data)
         if not versionFrame.versionsBehindText then
             versionFrame.versionsBehindText = versionFrame:CreateFontString(nil, "OVERLAY")
 
-            versionFrame.versionsBehindText:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
+            versionFrame.versionsBehindText:SetFont(AUP.gs.visual.font, 18, AUP.gs.visual.fontFlags)
             versionFrame.versionsBehindText:SetPoint("CENTER", versionFrame, "CENTER")
         end
 

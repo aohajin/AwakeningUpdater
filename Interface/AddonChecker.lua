@@ -48,7 +48,7 @@ local function BuildAddonLabels()
         if not labels[i] then
             labels[i] = labelFrame:CreateFontString(nil, "OVERLAY")
 
-            labels[i]:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
+            labels[i]:SetFont(AUP.gs.visual.font, 12, AUP.gs.visual.fontFlags)
         end
 
         labels[i]:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.white, displayName))
@@ -74,7 +74,7 @@ local function CheckElementInitializer(frame, data)
     if not frame.coloredName then
         frame.coloredName = frame:CreateFontString(nil, "OVERLAY")
 
-        frame.coloredName:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
+        frame.coloredName:SetFont(AUP.gs.visual.font, 18, AUP.gs.visual.fontFlags)
         frame.coloredName:SetPoint("LEFT", frame, "LEFT", 8, 0)
     end
 
@@ -98,7 +98,7 @@ local function CheckElementInitializer(frame, data)
         if not versionFrame.versionsText then
             versionFrame.versionsText = versionFrame:CreateFontString(nil, "OVERLAY")
 
-            versionFrame.versionsText:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
+            versionFrame.versionsText:SetFont(AUP.gs.visual.font, 18, AUP.gs.visual.fontFlags)
             versionFrame.versionsText:SetPoint("CENTER", versionFrame, "CENTER")
         end
 
@@ -156,7 +156,7 @@ local function CheckElementInitializer(frame, data)
 
             AUP:AddTooltip(
                 versionFrame,
-                "该玩家的插件版本与你相同."
+                string.format("此玩家的该插件版本与你相同，是%s", myVersion)
             )
         end
     end
@@ -178,7 +178,7 @@ local function CheckElementInitializer(frame, data)
     frame:SetScript("OnSizechanged", frame.PositionVersionFrames)
 end
 
-function AUP:InitializeAuraChecker()
+function AUP:InitializeAddonChecker()
     scrollFrame = CreateFrame("Frame", nil, AUP.addonCheckWindow, "WowScrollBoxList")
     scrollFrame:SetPoint("TOPLEFT", AUP.addonCheckWindow, "TOPLEFT", 4, -32)
     scrollFrame:SetPoint("BOTTOMRIGHT", AUP.addonCheckWindow, "BOTTOMRIGHT", -24, 4)

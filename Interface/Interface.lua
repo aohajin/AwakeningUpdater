@@ -19,7 +19,7 @@ function AUP:InitializeInterface()
 
     -- 标题
     local title = AUP.window.moverFrame:CreateFontString(nil, "OVERLAY")
-    title:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    title:SetFont(AUP.gs.visual.font, 12, AUP.gs.visual.fontFlags)
     title:SetPoint("CENTER", AUP.window.moverFrame, "CENTER", 0, 0)
     title:SetText("觉醒 Raid Tools")
 
@@ -140,7 +140,7 @@ function AUP:CreateButtonPanelGroup(parentFrame, panelDefs, padding, spacing)
         button.highlight:SetAllPoints()
 
         button.text = button:CreateFontString(nil, "OVERLAY")
-        button.text:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+        button.text:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
         button.text:SetPoint("CENTER", button, "CENTER")
         button.text:SetText(string.format("|cff%s%s|r", def.color, def.label))
 

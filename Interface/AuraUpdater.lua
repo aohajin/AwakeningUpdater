@@ -174,7 +174,7 @@ local function ReceiveVersions(_, payload, _, sender)
     end
 
     for displayName, version in pairs(versionsTable) do
-        if not AUP.IsAddon(displayName) then
+        if not AUP:IsAddon(displayName) then
             --     -- check addon version
             --     local myVersion = AUP.addonVersionDiffTable[displayName].myVersion or "None"
 
@@ -229,6 +229,8 @@ function AUP:InitializeAuraUpdater()
     for displayName, auraData in pairs(AwakeningUpdaterSaved.WeakAuras) do
         auraUIDs[auraData.d.uid] = true
 
+        print(displayName)
+
         AUP.highestSeenAuraVersionsTable[displayName] = auraData.d.AwakeningVersion
     end
 
@@ -280,7 +282,7 @@ function AUP:InitializeAuraUpdater()
 
     allAurasUpdatedText = AUP.updateWindow:CreateFontString(nil, "OVERLAY")
 
-    allAurasUpdatedText:SetFont(AUP.gs.visual.font, 21, AUP.gs.visual.fontFlags)
+    allAurasUpdatedText:SetFont(AUP.gs.visual.font, 18, AUP.gs.visual.fontFlags)
     allAurasUpdatedText:SetPoint("CENTER", AUP.updateWindow, "CENTER")
     allAurasUpdatedText:SetText(string.format("|cff%s已全部最新|r", AUP.gs.visual.colorStrings.green))
 

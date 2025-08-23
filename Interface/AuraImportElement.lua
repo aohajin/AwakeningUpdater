@@ -22,7 +22,7 @@ function AUP:CreateAuraImportElement(parent)
     -- Display name
     frame.displayName = frame:CreateFontString(nil, "OVERLAY")
 
-    frame.displayName:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    frame.displayName:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
     frame.displayName:SetPoint("LEFT", frame, "LEFT", 8, 0)
 
     function frame:SetDisplayName(displayName)
@@ -50,7 +50,7 @@ function AUP:CreateAuraImportElement(parent)
     -- Version count
     frame.versionCount = frame:CreateFontString(nil, "OVERLAY")
 
-    frame.versionCount:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    frame.versionCount:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
     frame.versionCount:SetPoint("CENTER", frame, "CENTER")
 
     function frame:SetVersionsBehind(count)
@@ -62,14 +62,14 @@ function AUP:CreateAuraImportElement(parent)
 
     frame.importButton:SetPoint("RIGHT", frame, "RIGHT", -8, 0)
     frame.importButton:SetText("更新")
-    frame.importButton:GetFontString():SetFont(AUP.gs.visual.font, 13)
+    frame.importButton:GetFontString():SetFont(AUP.gs.visual.font, 10)
 
     C_Timer.After(0, function() frame.importButton:SetSize(frame.importButton:GetTextWidth() + 20, 32) end)
 
     -- Requires addon update text
     frame.requiresUpdateText = frame:CreateFontString(nil, "OVERLAY")
 
-    frame.requiresUpdateText:SetFont(AUP.gs.visual.font, 17, AUP.gs.visual.fontFlags)
+    frame.requiresUpdateText:SetFont(AUP.gs.visual.font, 15, AUP.gs.visual.fontFlags)
     frame.requiresUpdateText:SetPoint("RIGHT", frame, "RIGHT", -8, 0)
     frame.requiresUpdateText:SetText(string.format("|cff%s更新插件!|r", AUP.gs.visual.colorStrings.red))
     frame.requiresUpdateText:Hide()
