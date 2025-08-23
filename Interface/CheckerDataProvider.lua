@@ -60,6 +60,7 @@ function AUP:UpdateCheckElementForUnit(unit, versionsTable)
     -- Compare unit's versions against the highest ones we've seen so far
     -- Set version to -1 if no version table was provided (i.e. we have no info for this unit)
     for displayName, highestVersion in pairs(AUP.highestSeenAuraVersionsTable) do
+        print(displayName, highestVersion)
         local version = versionsTable and versionsTable[displayName] or 0
         local versionsBehind = versionsTable and highestVersion - version or -1
 

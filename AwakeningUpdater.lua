@@ -1,4 +1,5 @@
 local _, AUP = ...
+_G["AUP"] = AUP
 
 --local LDB = LibStub("LibDataBroker-1.1")
 --local LDBIcon = LibStub("LibDBIcon-1.0")
