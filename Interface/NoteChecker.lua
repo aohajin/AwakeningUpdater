@@ -89,7 +89,7 @@ local function CheckElementInitializer(frame, data)
     ]]
     for i, noteInfo in ipairs(data.noteTable) do
         local unitNote     = noteInfo.unitNote
-        local displayName  = noteInfo.displayName
+        --local displayName  = noteInfo.displayName
 
         local myNote       = AUP:GetNsNote()
 
@@ -131,18 +131,18 @@ local function CheckElementInitializer(frame, data)
             versionFrame.versionsText:Show()
             versionFrame.versionsIcon:Hide()
 
-            versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, "NOTE"))
+            versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.blue, "有差异"))
 
             AUP:AddTooltip(
                 versionFrame,
-                string.format("该玩家的战术板信息是%s，但你的战术板信息为空.", version)
+                string.format("该玩家的战术板信息是%s，但你的战术板信息为空.", unitNote)
             )
         elseif unitNote ~= myNote then
             versionFrame.versionsText:Show()
             versionFrame.versionsIcon:Hide()
 
             versionFrame.versionsText:SetText(string.format("|cff%s%s|r", AUP.gs.visual.colorStrings.red,
-                "NOTE"))
+                "有差异"))
 
             AUP:AddTooltip(
                 versionFrame,
