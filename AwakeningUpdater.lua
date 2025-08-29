@@ -31,7 +31,7 @@ eventFrame:SetScript(
 )
 
 SLASH_AwakeningUPDATER1, SLASH_AwakeningUPDATER2, SLASH_AwakeningUPDATER3 = "/au", "/art",
-    "/Awakeningupdater"
+    "/awakeningupdater"
 function SlashCmdList.AwakeningUPDATER()
     AUP.window:SetShown(not AUP.window:IsShown())
 end

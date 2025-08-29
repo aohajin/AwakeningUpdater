@@ -25,3 +25,4 @@ Interface/AddonChecker.lua
 Interface/NoteChecker.lua
 
 AwakeningUpdater.lua
+options.lua
