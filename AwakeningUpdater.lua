@@ -1,4 +1,4 @@
-local _, AUP = ...
+local ADDON_NAME, AUP = ...
 _G["AUP"] = AUP
 
 --local LDB = LibStub("LibDataBroker-1.1")
@@ -57,12 +57,9 @@ btn:SetScript("OnClick", function()
 end)
 
 -- 注册到 ESC→Options→AddOns
-local categoryID
 if Settings and Settings.RegisterAddOnCategory then
     -- 先创建一个“画布布局”category，再注册到 AddOns
     local category, _layout_ = Settings.RegisterCanvasLayoutCategory(panel, ADDON_NAME)
-
-    categoryID = category.ID
     Settings.RegisterAddOnCategory(category)
 else
     InterfaceOptions_AddCategory(panel) -- 旧版
@@ -71,11 +68,6 @@ end
 
 SLASH_AwakeningUPDATER1, SLASH_AwakeningUPDATER2, SLASH_AwakeningUPDATER3 = "/au", "/art",
     "/awakeningupdater"
-function SlashCmdList.AwakeningUPDATER(msg)
-    if msg and msg:lower() == "opt" and categoryID and Settings and Settings.OpenToCategory then
-        Settings.OpenToCategory(categoryID)
-        return
-    end
-
+function SlashCmdList.AwakeningUPDATER()
     AUP.window:SetShown(not AUP.window:IsShown())
 end
