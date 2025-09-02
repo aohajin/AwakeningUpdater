@@ -288,7 +288,6 @@ function AUP:InitializeAuraUpdater()
 
                     local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or
                         "PARTY"
-
                     RequestVersions(chatType)
                 end
             end
@@ -303,6 +302,13 @@ function AUP:InitializeAuraUpdater()
 
     BuildAuraImportElements()
     RequestVersions()
+end
+
+function AUP:SyncOnDemand()
+    QueueUpdate()
+    local chatType = IsInGroup(LE_PARTY_CATEGORY_INSTANCE) and "INSTANCE_CHAT" or IsInRaid() and "RAID" or
+        "PARTY"
+    RequestVersions(chatType)
 end
 
 local function OnEvent(_, event)

@@ -8,6 +8,7 @@ local elementHeight = 32
 
 local scrollFrame, scrollBar, scrollView, labelFrame
 local labels = {} -- Label fontstrings
+local refreshButton = nil
 
 local function PositionNoteLabels(_, width)
     local firstVersionFrameX = nameFrameWidth + versionFramePaddingLeft
@@ -28,6 +29,16 @@ local function BuildNoteLabels()
         labelFrame:SetHeight(24)
 
         labelFrame:SetScript("OnSizeChanged", PositionNoteLabels)
+    end
+
+    if not refreshButton then
+        refreshButton = CreateFrame("Button", "$parentRefreshBtn", AUP.noteCheckWindow, "UIPanelButtonTemplate")
+        refreshButton:SetSize(120, 20)
+        refreshButton:SetPoint("BOTTOMLEFT", scrollFrame, "TOPLEFT", 0, 4)
+        refreshButton:SetText("刷新")
+        refreshButton:SetScript("OnClick", function()
+            AUP:SyncOnDemand()
+        end)
     end
 
     local sortedLabelTable = {}

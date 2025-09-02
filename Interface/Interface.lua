@@ -6,27 +6,22 @@ CreateFrame("GameTooltip", "AuTooltip", UIParent, "GameTooltipTemplate")
 AUP.Tooltip = _G["AuTooltip"]
 AUP.Tooltip.TextLeft1:SetFont(AUP.gs.visual.font, 13)
 
-local windowWidth, windowHeight = 600, 400
+local windowWidth, windowHeight = 720, 480
 
 function AUP:InitializeInterface()
     local screenWidth, screenHeight = GetPhysicalScreenSize()
 
     -- 主窗口
-    AUP.window = AUP:CreateWindow("Main", true, true, true)
+    AUP.window = AUP:CreateWindow("覺 醒 Raid Tools", true, true, true)
     AUP.window:SetFrameStrata("HIGH")
     AUP.window:SetResizeBounds(windowWidth, windowHeight)
     AUP.window:Hide()
 
-    -- 标题
-    local title = AUP.window.moverFrame:CreateFontString(nil, "OVERLAY")
-    title:SetFont(AUP.gs.visual.font, 16, AUP.gs.visual.fontFlags)
-    title:SetPoint("CENTER", AUP.window.moverFrame, "CENTER", 0, 0)
-    title:SetText("覺 醒 Raid Tools")
 
     -- 按钮框架
     local buttonFrame = CreateFrame("Frame", nil, AUP.window)
-    buttonFrame:SetPoint("TOPLEFT", AUP.window.moverFrame, "BOTTOMLEFT")
-    buttonFrame:SetPoint("TOPRIGHT", AUP.window.moverFrame, "BOTTOMRIGHT")
+    buttonFrame:SetPoint("TOPLEFT", AUP.window.TitleBg, "BOTTOMLEFT")
+    buttonFrame:SetPoint("TOPRIGHT", AUP.window.TitleBg, "BOTTOMRIGHT")
     buttonFrame:SetHeight(45)
 
     -- 子面板
